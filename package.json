@@ -26,6 +26,7 @@
     ]
   },
   "dependencies": {
+    "babel-standalone": "^6.26.0",
     "express": "^4.16.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -38,7 +39,7 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "react-test-renderer": "^16.2.0",
-    "redux-test-utils": "^0.2.2",
-    "redux-devtools": "^3.4.1"
+    "redux-devtools": "^3.4.1",
+    "redux-test-utils": "^0.2.2"
   }
 }
