@@ -14,12 +14,6 @@
   height: 100%;
 }
 
-textarea {
-  width: 100%;
-  resize: none;
-  margin: 5px;
-}
-
 .title-dashboard{
   color: red;
 }

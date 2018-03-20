@@ -1,3 +1,9 @@
-.msg-alert {
+.msg-alert {
   color: red;
+}
+
+.code-editor {
+  width: 100%;
+  resize: none;
+  margin: 5px;
 }
