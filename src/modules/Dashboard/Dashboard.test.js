@@ -1,18 +1,16 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 
 import { Dashboard } from './';
 
-
 describe('CodeEditor', () => {
-  const code = "const message = 'hello'";
+  const code = "const message = 'it's working!';";
   it('renders Dashboard without crashing', () => {
     shallow(<Dashboard title={"title"}/>);
   });
   it('Code has been enter', () => {
-    const wrapper = shallow(<Dashboard title={"title"}/>);
-    const codeEditor = wrapper.find('CodeEditor');
-    console.log(codeEditor)
+    const event = {target: {name: 'code', value: code}};
+    const dashboard = mount(<Dashboard title={"title"}/>);
+    dashboard.find('.code').simulate('change', event);
   });
 });

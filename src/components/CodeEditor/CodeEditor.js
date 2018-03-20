@@ -24,9 +24,10 @@ class CodeEditor extends Component {
 
     const isTranspile = Boolean(options);
     const transpile = this.transpile;
+    const naming = isTranspile ? "codeCompile" : "code";
 
     return (
-      <textarea name={isTranspile ? "codeCompile" : "code"} value={isTranspile ? transpile(code) : code} onChange={handleChange}></textarea>
+      <textarea className={'code-editor ' + naming} name={naming} value={isTranspile ? transpile(code) : code} onChange={handleChange}></textarea>
     );
   }
 

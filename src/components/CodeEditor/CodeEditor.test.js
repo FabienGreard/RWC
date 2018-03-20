@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import { CodeEditor } from './CodeEditor';
 
 describe('CodeEditor', () => {
-  const code = "const message= 'it's working!';";
+  const code = "const message = 'it's working!';";
   const options = {
     plugins: [""],
     presets: [""]
