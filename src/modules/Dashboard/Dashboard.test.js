@@ -8,9 +8,15 @@ describe('CodeEditor', () => {
   it('renders Dashboard without crashing', () => {
     shallow(<Dashboard title={"title"}/>);
   });
-  it('Code has been enter', () => {
-    const event = {target: {name: 'code', value: code}};
-    const dashboard = mount(<Dashboard title={"title"}/>);
-    dashboard.find('.code').simulate('change', event);
+  it('code has been changed', () => {
+    const event = { target: { name: 'code', value: code } };
+    const wrapper = mount(<Dashboard title={"title"}/>);
+    wrapper.find('.code').simulate('change', event);
+  });
+  it('options has changed', () => {
+    const event = { target: { name: "transform-object-assign", checked: false } };
+    const wrapper = mount(<Dashboard title={"title"}/>);
+
+    wrapper.find({ name: 'latest' }).simulate('change', event);
   });
 });
