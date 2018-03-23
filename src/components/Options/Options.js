@@ -89,7 +89,6 @@ Checkbox.propTypes = {
 Options.propTypes = {
   options: PropTypes.object.isRequired,
   handleOptionsChange: PropTypes.func.isRequired,
-  children: PropTypes.object,
 };
 
 export { Options };

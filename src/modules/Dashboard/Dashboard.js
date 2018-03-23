@@ -12,6 +12,12 @@ class Dashboard extends React.Component {
     this.state = { code: "", plugins: ["transform-object-assign", "transform-object-rest-spread"], presets: ["latest", "stage-3"] };
   }
 
+  componentDidMount() {
+    this.setState({
+      el: this.instance
+    });
+  }
+
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
@@ -23,7 +29,7 @@ class Dashboard extends React.Component {
 
   render() {
     const { title } = this.props;
-    const { code, plugins, presets } = this.state
+    const { code, plugins, presets, el } = this.state
 
     const options = { presets, plugins };
 
@@ -35,11 +41,14 @@ class Dashboard extends React.Component {
         <h1 className="title-dashboard">{title}</h1>
         <div className="textarea-container-dashboard">
           <Options options={options} handleOptionsChange={handleOptionsChange}>
-            <Evaluate code={code}/>
+            {
+              typeof el !== "undefined" && <Evaluate code={code} el={el}/>
+            }
           </Options>
           <CodeEditor code={code} handleChange={handleChange}/>
           <CodeEditor code={code} handleChange={handleChange} options={options} />
         </div>
+        <iframe title={"iFrame"} style={{display: "none"}} ref={el => this.instance = el}></iframe>
       </div>
     );
   }
