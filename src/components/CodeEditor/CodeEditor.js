@@ -17,26 +17,30 @@ class CodeEditor extends Component {
     } catch (error) {
       return error;
     }
-  }
+  };
 
   render() {
     const { code, handleChange, options } = this.props;
 
     const isTranspile = Boolean(options);
     const transpile = this.transpile;
-    const naming = isTranspile ? "codeCompile" : "code";
+    const naming = isTranspile ? 'codeCompile' : 'code';
 
     return (
-      <textarea className={'code-editor ' + naming} name={naming} value={isTranspile ? transpile(code) : code} onChange={handleChange}></textarea>
+      <textarea
+        className={'code-editor ' + naming}
+        name={naming}
+        value={isTranspile ? transpile(code) : code}
+        onChange={handleChange}
+      />
     );
   }
-
 }
 
 CodeEditor.propTypes = {
   code: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  options: PropTypes.object,
+  options: PropTypes.object
 };
 
 export { CodeEditor };

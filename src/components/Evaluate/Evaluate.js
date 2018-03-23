@@ -22,7 +22,7 @@ class Evaluate extends Component {
 
   componentWillReceiveProps(nextProps) {
     if(this.props.code !== nextProps.code && this.state.isEvaluate){
-      this.evaluatecode(nextProps.code);
+      this.evaluateCode(nextProps.code);
     }
   }
 
@@ -31,10 +31,10 @@ class Evaluate extends Component {
     this.setState( prevState => ({
       [name]: checked
     }));
-    if(!this.state.isEvaluate) this.evaluatecode(this.props.code)
+    if(!this.state.isEvaluate) this.evaluateCode(this.props.code)
   }
 
-  evaluatecode = (code) => {
+  evaluateCode = (code) => {
     const context = this.props.el.contentWindow.document;
     if(!context.querySelector("script")){
       const script = document.createElement("script");

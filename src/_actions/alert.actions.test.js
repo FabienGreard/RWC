@@ -1,7 +1,7 @@
 import { createMockStore } from 'redux-test-utils';
 import { alertActions } from './';
 
-describe('Alert', () => { 
+describe('Alert', () => {
   it('alert is cleared', () => {
     const store = createMockStore({});
     store.dispatch(alertActions.clear());

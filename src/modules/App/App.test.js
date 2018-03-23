@@ -17,11 +17,11 @@ describe('App', () => {
     );
   });
   it('History change', () => {
-    history.push("/");
+    history.push('/');
     expect(history.location.pathname).toEqual('/');
   });
   it('no match', () => {
-    history.push("/will-not-match");
+    history.push('/will-not-match');
     expect(history.location.pathname).toEqual('/');
   });
 });

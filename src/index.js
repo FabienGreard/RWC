@@ -7,11 +7,12 @@ import { Router } from 'react-router-dom';
 import { store, history } from './helpers';
 import { App } from './modules';
 
-
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
-      <App/>
+      <App />
     </Router>
-  </Provider>, document.getElementById('root'));
+  </Provider>,
+  document.getElementById('root')
+);
 registerServiceWorker();
