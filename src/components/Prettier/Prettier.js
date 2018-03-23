@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import * as prettier from 'prettier';
+//import * as prettier from 'prettier';
 
 /* CSS */
 import './Prettier.css';
@@ -25,7 +25,7 @@ class Prettier extends Component {
   };
 
   prettierCode = code => {
-    console.log(prettier.format(code));
+    //console.log(prettier.format(code));
   };
 
   render() {
