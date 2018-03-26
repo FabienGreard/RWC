@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-//import * as prettier from 'prettier';
+import * as beautify from 'js-beautify';
 
 /* CSS */
 import './Prettier.css';
@@ -25,7 +25,11 @@ class Prettier extends Component {
   };
 
   prettierCode = code => {
-    //console.log(prettier.format(code));
+    this.props.setCode(beautify.js(code, { indent_size: 2 }));
+
+    this.setState({
+      isPrettier: false
+    });
   };
 
   render() {
@@ -48,7 +52,8 @@ class Prettier extends Component {
 }
 
 Prettier.propTypes = {
-  code: PropTypes.string.isRequired
+  code: PropTypes.string.isRequired,
+  setCode: PropTypes.func.isRequired
 };
 
 export { Prettier };

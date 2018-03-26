@@ -31,6 +31,12 @@ class Dashboard extends React.Component {
     this.setState({ plugins: options.plugins, presets: options.presets });
   };
 
+  setCode = code => {
+    this.setState({
+      code: code
+    });
+  };
+
   render() {
     const { title } = this.props;
     const { code, plugins, presets, el } = this.state;
@@ -39,6 +45,7 @@ class Dashboard extends React.Component {
 
     const handleChange = this.handleChange;
     const handleOptionsChange = this.handleOptionsChange;
+    const setCode = this.setCode;
 
     return (
       <div className="container-dashboard">
@@ -46,7 +53,7 @@ class Dashboard extends React.Component {
         <div className="textarea-container-dashboard">
           <Options options={options} handleOptionsChange={handleOptionsChange}>
             {typeof el !== 'undefined' && <Evaluate code={code} el={el} />}
-            <Prettier code={code} />
+            <Prettier code={code} setCode={setCode} />
           </Options>
           <CodeEditor code={code} handleChange={handleChange} />
           <CodeEditor
