@@ -1,5 +1,6 @@
 import React from 'react';
 
+/* COMPONENTS */
 import { CodeEditor, Options, Evaluate, Prettier } from '../../components';
 
 /* CSS */
@@ -14,7 +15,7 @@ class Dashboard extends React.Component {
         presets: ['latest', 'stage-3'],
         plugins: ['transform-object-assign', 'transform-object-rest-spread']
       }, //babel options
-      el: {} //iframe dom element reference
+      el: undefined //iframe dom element reference
     };
   }
 

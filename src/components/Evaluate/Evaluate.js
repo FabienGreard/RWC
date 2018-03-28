@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+/* ACTIONS */
+import { alertActions } from '../../_actions';
 
 /* CSS */
 import './Evaluate.css';
@@ -11,46 +15,50 @@ class Evaluate extends Component {
   }
 
   componentDidMount() {
-    if(this.props.el.contentWindow){
-      const window = this.props.el.contentWindow
+    if (this.props.el.contentWindow) {
+      const window = this.props.el.contentWindow;
       window.onerror = (msg, url, line, column, error) => {
-        console.log(`${msg.slice(9)}; (${line}:${column})`);
+        this.props.dispatch(
+          alertActions.error(`${msg.slice(9)}; (${line}:${column})`)
+        );
         return true;
       };
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.props.code !== nextProps.code && this.state.isEvaluate){
+    if (this.props.code !== nextProps.code && this.state.isEvaluate) {
       this.evaluateCode(nextProps.code);
     }
   }
 
   handleChange = e => {
     const { name, checked } = e.target;
-    this.setState( prevState => ({
+    this.setState(prevState => ({
       [name]: checked
     }));
-    if(!this.state.isEvaluate) this.evaluateCode(this.props.code)
-  }
+    if (!this.state.isEvaluate) this.evaluateCode(this.props.code);
+  };
 
-  evaluateCode = (code) => {
+  evaluateCode = code => {
     const context = this.props.el.contentWindow.document;
-    if(!context.querySelector("script")){
-      const script = document.createElement("script");
+    if (!context.querySelector('script')) {
+      const script = document.createElement('script');
       context.body.appendChild(script);
-    }else{
+    } else {
       this.deleteScript();
-      const script = document.createElement("script");
+      const script = document.createElement('script');
       context.body.appendChild(script);
     }
-      context.querySelector("script").innerHTML = code;
-  }
+    context.querySelector('script').innerHTML = code;
+  };
 
   deleteScript = () => {
-    const scriptTag = this.props.el.contentWindow.document.querySelector("script");
+    const scriptTag = this.props.el.contentWindow.document.querySelector(
+      'script'
+    );
     scriptTag.parentNode.removeChild(scriptTag);
-  }
+  };
 
   render() {
     const { isEvaluate } = this.state;
@@ -59,12 +67,16 @@ class Evaluate extends Component {
 
     return (
       <div>
-        <input type="checkbox" name="isEvaluate" checked={isEvaluate} onChange={handleChange}/>
+        <input
+          type="checkbox"
+          name="isEvaluate"
+          checked={isEvaluate}
+          onChange={handleChange}
+        />
         <label htmlFor="checkbox">Evaluate</label>
       </div>
     );
   }
-
 }
 
 Evaluate.propTypes = {
@@ -72,4 +84,5 @@ Evaluate.propTypes = {
   el: PropTypes.object.isRequired
 };
 
-export { Evaluate };
+const connectedEvaluate = connect()(Evaluate);
+export { connectedEvaluate as Evaluate };

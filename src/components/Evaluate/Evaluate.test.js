@@ -1,6 +1,8 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
+import { Provider } from 'react-redux';
 
+import { store } from '../../helpers';
 import { Evaluate } from './Evaluate';
 
 describe('Evaluate', () => {
@@ -11,21 +13,35 @@ describe('Evaluate', () => {
   });
 
   it('renders Evaluate without crashing', () => {
-    shallow(<Evaluate code={code} el={el} />);
+    mount(
+      <Provider store={store}>
+        <Evaluate code={code} el={el} />
+      </Provider>
+    );
   });
-  it('options has been checked', () => {
+  it('Evaluate has been checked', () => {
     let event = { target: { name: 'isEvaluate', checked: true } };
-    const wrapper = mount(<Evaluate code={code} el={el} />);
+    const wrapper = shallow(
+      <Provider store={store}>
+        <Evaluate code={code} el={el} />
+      </Provider>
+    );
 
-    wrapper.find({ name: 'isEvaluate' }).simulate('change', event);
-    wrapper.find({ name: 'isEvaluate' }).simulate('change', event);
+    const component = wrapper.dive({ context: { store } }).dive();
+
+    component.find({ name: 'isEvaluate' }).simulate('change', event);
+    component.setProps({ code: '/* nothing */' });
   });
   it('script already exist', () => {
     let event = { target: { name: 'isEvaluate', checked: true } };
-    const wrapper = mount(<Evaluate code={code} el={el} />);
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <Evaluate code={code} el={el} />
+      </Provider>
+    );
 
     wrapper.find({ name: 'isEvaluate' }).simulate('change', event);
-    wrapper.setProps({ code: '/* NOTHING */;' });
   });
   it('code has errors', () => {
     el.contentWindow.dispatchEvent(new Event('error'));
