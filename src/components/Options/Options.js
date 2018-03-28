@@ -23,8 +23,8 @@ class Options extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      optionsList: { ...props.options },
-      optionsChecked: optionsIsChecked(props.options)
+      optionsList: props.options, // list of options
+      optionsChecked: optionsIsChecked(props.options) // options with booleans
     };
   }
 

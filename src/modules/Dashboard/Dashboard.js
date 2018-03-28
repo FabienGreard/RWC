@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { CodeEditor, Options, Evaluate, Prettier } from '../../components';
 
@@ -12,8 +11,8 @@ class Dashboard extends React.Component {
     this.state = {
       code: '', //javascript
       options: {
-        plugins: ['transform-object-assign', 'transform-object-rest-spread'],
-        presets: ['latest', 'stage-3']
+        presets: ['latest', 'stage-3'],
+        plugins: ['transform-object-assign', 'transform-object-rest-spread']
       }, //babel options
       el: {} //iframe dom element reference
     };
@@ -60,9 +59,5 @@ class Dashboard extends React.Component {
     );
   }
 }
-
-Dashboard.propTypes = {
-  title: PropTypes.string.isRequired
-};
 
 export { Dashboard };

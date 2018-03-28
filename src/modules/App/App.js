@@ -34,16 +34,7 @@ class App extends React.Component {
       <div>
         <Alert alert={alert} />
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={props => (
-              <Dashboard
-                {...props}
-                title={`Path : ${props.location.pathname}`}
-              />
-            )}
-          />
+          <Route exact path="/" render={props => <Dashboard {...props} />} />
           {/* Redirect to Dashboard if no match */}
           <Redirect to="/" />
         </Switch>
