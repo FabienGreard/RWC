@@ -10,9 +10,12 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: '',
-      plugins: ['transform-object-assign', 'transform-object-rest-spread'],
-      presets: ['latest', 'stage-3']
+      code: '', //javascript
+      options: {
+        plugins: ['transform-object-assign', 'transform-object-rest-spread'],
+        presets: ['latest', 'stage-3']
+      }, //babel options
+      el: {} //iframe dom element reference
     };
   }
 
@@ -27,24 +30,17 @@ class Dashboard extends React.Component {
     this.setState({ [name]: value });
   };
 
-  handleOptionsChange = options => {
-    this.setState({ plugins: options.plugins, presets: options.presets });
-  };
-
   render() {
     const { title } = this.props;
-    const { code, plugins, presets, el } = this.state;
-
-    const options = { presets, plugins };
+    const { code, options, el } = this.state;
 
     const handleChange = this.handleChange;
-    const handleOptionsChange = this.handleOptionsChange;
 
     return (
       <div className="container-dashboard">
         <h1 className="title-dashboard">{title}</h1>
         <div className="textarea-container-dashboard">
-          <Options options={options} handleOptionsChange={handleOptionsChange}>
+          <Options options={options} handleChange={handleChange}>
             {typeof el !== 'undefined' && <Evaluate code={code} el={el} />}
             <Prettier code={code} handleChange={handleChange} />
           </Options>

@@ -36,7 +36,7 @@ class Options extends Component {
     }
   }
 
-  handleOptionsChange = (e, list) => {
+  handleChange = (e, list) => {
     const { name, checked } = e.target;
     this.setState(
       {
@@ -53,7 +53,9 @@ class Options extends Component {
               this.state.optionsChecked[list]
             ).filter(key => this.state.optionsChecked[list][key]))
         );
-        this.props.handleOptionsChange(options);
+        this.props.handleChange({
+          target: { name: 'options', value: options }
+        });
       }
     );
   };
@@ -62,7 +64,7 @@ class Options extends Component {
     const { children } = this.props;
     const { optionsList, optionsChecked } = this.state;
 
-    const handleOptionsChange = this.handleOptionsChange;
+    const handleChange = this.handleChange;
 
     return (
       <div>
@@ -79,7 +81,7 @@ class Options extends Component {
                 list={optionsList[list]}
                 listChecked={optionsChecked[list]}
                 category={list}
-                handleOptionsChange={handleOptionsChange}
+                handleChange={handleChange}
               />
             </div>
           ))}
@@ -88,7 +90,7 @@ class Options extends Component {
   }
 }
 
-const Checkbox = ({ list, listChecked, category, handleOptionsChange }) =>
+const Checkbox = ({ list, listChecked, category, handleChange }) =>
   list &&
   list.map(val => (
     <div key={val}>
@@ -96,7 +98,7 @@ const Checkbox = ({ list, listChecked, category, handleOptionsChange }) =>
         type="checkbox"
         name={val}
         checked={listChecked[val]}
-        onChange={e => handleOptionsChange(e, category)}
+        onChange={e => handleChange(e, category)}
       />
       <label htmlFor={val}>{val}</label>
     </div>
@@ -106,12 +108,12 @@ Checkbox.propTypes = {
   list: PropTypes.array.isRequired,
   listChecked: PropTypes.object.isRequired,
   category: PropTypes.string.isRequired,
-  handleOptionsChange: PropTypes.func.isRequired
+  handleChange: PropTypes.func.isRequired
 };
 
 Options.propTypes = {
   options: PropTypes.object.isRequired,
-  handleOptionsChange: PropTypes.func.isRequired
+  handleChange: PropTypes.func.isRequired
 };
 
 export { Options };
