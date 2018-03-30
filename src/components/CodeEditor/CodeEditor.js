@@ -28,7 +28,7 @@ class CodeEditor extends Component {
 
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.options && nextState.error) {
-      this.props.dispatch(alertActions.error(nextState.error.toString()));
+      this.props.dispatch(alertActions.error(nextState.error.message));
     }
   }
 

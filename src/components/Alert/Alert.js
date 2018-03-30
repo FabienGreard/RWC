@@ -8,9 +8,7 @@ class Alert extends Component {
   render() {
     const { alert } = this.props;
     return (
-      <div className="msg-alert">
-        {typeof alert !== 'undefined' && alert.message}
-      </div>
+      <textarea className="alert-msg" value={alert && alert.message} readOnly />
     );
   }
 }

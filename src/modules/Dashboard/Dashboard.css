@@ -1,4 +1,4 @@
-.container-dashboard {
+.dashboard {
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -8,11 +8,24 @@
   left: 0;
 }
 
-.textarea-container-dashboard {
+.dashboard-container {
   display: flex;
   height: 100%;
 }
 
-.title-dashboard {
-  color: red;
+.code-mirror {
+  position: relative;
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.alert {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 6px;
 }

@@ -53,19 +53,27 @@ class Dashboard extends React.Component {
     const handleChange = this.handleChange;
 
     return (
-      <div className="container-dashboard">
-        <Alert alert={alert} />
-        <div className="textarea-container-dashboard">
+      <div className="dashboard">
+        <div className="dashboard-container">
           <Options options={options} handleChange={handleChange}>
             {typeof el !== 'undefined' && <Evaluate code={code} el={el} />}
             <Prettier code={code} handleChange={handleChange} />
           </Options>
-          <CodeEditor code={code} handleChange={handleChange} />
-          <CodeEditor
-            code={code}
-            handleChange={handleChange}
-            options={options}
-          />
+          <div className="code-mirror">
+            <CodeEditor code={code} handleChange={handleChange} />
+          </div>
+          <div className="code-mirror">
+            <CodeEditor
+              code={code}
+              handleChange={handleChange}
+              options={options}
+            />
+            {alert.message && (
+              <div className="alert">
+                <Alert alert={alert} />
+              </div>
+            )}
+          </div>
         </div>
         <iframe
           title={'iFrame'}
