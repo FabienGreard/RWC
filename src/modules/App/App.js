@@ -1,16 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 
 /* ACTIONS */
 import { alertActions } from '../../_actions';
 
 /* HELPERS */
 import { history } from '../../helpers';
-
-/* COMPONENTS */
-import { Alert } from '../../components';
 
 /* MODULES */
 import { Dashboard } from '../';
@@ -29,12 +25,10 @@ class App extends React.Component {
   }
 
   render() {
-    const { alert } = this.props;
     return (
       <div>
-        <Alert alert={alert} />
         <Switch>
-          <Route exact path="/" render={props => <Dashboard {...props} />} />
+          <Route exact path="/" component={props => <Dashboard {...props} />} />
           {/* Redirect to Dashboard if no match */}
           <Redirect to="/" />
         </Switch>
@@ -43,16 +37,5 @@ class App extends React.Component {
   }
 }
 
-App.propTypes = {
-  alert: PropTypes.object.isRequired
-};
-
-function mapStateToProps(state) {
-  const { alert } = state;
-  return {
-    alert
-  };
-}
-
-const connectedApp = connect(mapStateToProps)(App);
-export { connectedApp as App };
+const withRouterConnectedApp = withRouter(connect()(App));
+export { withRouterConnectedApp as App };

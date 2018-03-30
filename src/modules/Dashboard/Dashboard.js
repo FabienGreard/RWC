@@ -1,7 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 /* COMPONENTS */
-import { CodeEditor, Options, Evaluate, Prettier } from '../../components';
+import {
+  CodeEditor,
+  Options,
+  Evaluate,
+  Prettier,
+  Alert
+} from '../../components';
+
+/* ACTIONS */
+import { alertActions } from '../../_actions';
 
 /* CSS */
 import './Dashboard.css';
@@ -28,17 +39,22 @@ class Dashboard extends React.Component {
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
+    this.cleanChange();
+  };
+
+  cleanChange = () => {
+    this.props.dispatch(alertActions.clear());
   };
 
   render() {
-    const { title } = this.props;
+    const { alert } = this.props;
     const { code, options, el } = this.state;
 
     const handleChange = this.handleChange;
 
     return (
       <div className="container-dashboard">
-        <h1 className="title-dashboard">{title}</h1>
+        <Alert alert={alert} />
         <div className="textarea-container-dashboard">
           <Options options={options} handleChange={handleChange}>
             {typeof el !== 'undefined' && <Evaluate code={code} el={el} />}
@@ -61,4 +77,15 @@ class Dashboard extends React.Component {
   }
 }
 
-export { Dashboard };
+Dashboard.propTypes = {
+  alert: PropTypes.object.isRequired
+};
+
+function mapStateToProps(state) {
+  const { alert } = state;
+  return {
+    alert
+  };
+}
+const connectedDashboard = connect(mapStateToProps)(Dashboard);
+export { connectedDashboard as Dashboard };

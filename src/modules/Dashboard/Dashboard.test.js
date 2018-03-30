@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 
 import { store } from '../../helpers';
@@ -8,7 +8,11 @@ import { Dashboard } from './';
 describe('Dashboard', () => {
   const code = "const message = 'it's working!';";
   it('renders Dashboard without crashing', () => {
-    shallow(<Dashboard title={'title'} />);
+    const wrapper = mount(
+      <Provider store={store}>
+        <Dashboard />
+      </Provider>
+    );
   });
   it('code has been changed', () => {
     const event = { target: { name: 'code', value: code } };

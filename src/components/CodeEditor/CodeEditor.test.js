@@ -1,6 +1,8 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { Provider } from 'react-redux';
 
+import { store } from '../../helpers';
 import { CodeEditor } from './CodeEditor';
 
 describe('CodeEditor', () => {
@@ -10,8 +12,10 @@ describe('CodeEditor', () => {
     presets: ['']
   };
   it('renders CodeEditor without crashing', () => {
-    shallow(
-      <CodeEditor code={code} handleChange={() => {}} options={options} />
+    mount(
+      <Provider store={store}>
+        <CodeEditor code={code} handleChange={() => {}} options={options} />
+      </Provider>
     );
   });
 });
