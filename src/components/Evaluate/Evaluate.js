@@ -11,7 +11,7 @@ import './Evaluate.css';
 class Evaluate extends Component {
   constructor(props) {
     super(props);
-    this.state = { isEvaluate: false };
+    this.state = { isEvaluate: true };
   }
 
   componentDidMount() {
@@ -23,6 +23,11 @@ class Evaluate extends Component {
         );
         return true;
       };
+    } else {
+      const el = document.createElement('iframe');
+      Object.defineProperty(this.props.el, 'contentWindow', {
+        value: document.body.appendChild(el).contentWindow
+      });
     }
   }
 

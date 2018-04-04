@@ -20,7 +20,7 @@ describe('Evaluate', () => {
     );
   });
   it('Evaluate has been checked', () => {
-    let event = { target: { name: 'isEvaluate', checked: true } };
+    let event = { target: { name: 'isEvaluate', checked: false } };
     const wrapper = shallow(
       <Provider store={store}>
         <Evaluate code={code} el={el} />
@@ -30,6 +30,9 @@ describe('Evaluate', () => {
     const component = wrapper.dive({ context: { store } }).dive();
 
     component.find({ name: 'isEvaluate' }).simulate('change', event);
+    event = { target: { name: 'isEvaluate', checked: true } };
+    component.find({ name: 'isEvaluate' }).simulate('change', event);
+    component.setProps({ code: '/* nothing */' });
     component.setProps({ code: '/* nothing */' });
   });
   it('script already exist', () => {
