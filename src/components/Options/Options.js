@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+/* HELPERS */
+import { optionsMock } from '../../helpers';
+
+/* ACTIONS */
+import { optionsActions } from '../../_actions';
 
 /* CSS */
 import './Options.css';
@@ -23,17 +30,9 @@ class Options extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      optionsList: props.options, // list of options
-      optionsChecked: optionsIsChecked(props.options) // options with booleans
+      optionsList: optionsMock, // list of options
+      optionsChecked: optionsIsChecked(optionsMock) // options with booleans
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.options !== nextProps.options) {
-      this.setState(prevState => ({
-        optionsList: { ...nextProps.options, ...prevState.optionsList }
-      }));
-    }
   }
 
   handleChange = (e, list) => {
@@ -53,9 +52,7 @@ class Options extends Component {
               this.state.optionsChecked[list]
             ).filter(key => this.state.optionsChecked[list][key]))
         );
-        this.props.handleChange({
-          target: { name: 'options', value: options }
-        });
+        this.props.dispatch(optionsActions.update(options));
       }
     );
   };
@@ -116,4 +113,12 @@ Options.propTypes = {
   handleChange: PropTypes.func.isRequired
 };
 
-export { Options };
+function mapStateToProps(state) {
+  const options = state.options.items ? state.options.items : {};
+  return {
+    options
+  };
+}
+
+const connectedOptions = connect(mapStateToProps)(Options);
+export { connectedOptions as Options };

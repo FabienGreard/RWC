@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { transform } from 'babel-standalone';
 
 /* ACTIONS */
-import { alertActions } from '../../_actions';
+import { alertActions, optionsActions } from '../../_actions';
 
 /* CSS */
 import './CodeEditor.css';
@@ -14,31 +14,38 @@ class CodeEditor extends Component {
   constructor(props) {
     super(props);
     this.state = { code: '', error: '' };
+    props.dispatch(optionsActions.receive());
   }
 
   componentDidMount() {
-    this.transpile(this.props.code);
+    if (!this.props.handleChange) {
+      this.transpile(this.props.code, this.props.options);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.code !== nextProps.code) {
-      this.transpile(nextProps.code);
+    if (!this.props.handleChange) {
+      this.transpile(nextProps.code, nextProps.options);
+    } else {
+      this.setState({
+        code: nextProps.code
+      });
     }
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if (nextProps.options && nextState.error) {
+    if (!nextProps.handleChange && nextState.error) {
       this.props.dispatch(alertActions.error(nextState.error.message));
     }
   }
 
-  transpile = code => {
+  transpile = (code, options) => {
     try {
       this.setState({
         code: transform(code, {
           ast: false,
-          plugins: this.props.options.plugins,
-          presets: this.props.options.presets
+          plugins: options.plugins,
+          presets: options.presets
         }).code,
         error: ''
       });
@@ -51,12 +58,12 @@ class CodeEditor extends Component {
   };
 
   render() {
-    const { handleChange, options } = this.props;
+    const { handleChange } = this.props;
     const { code, error } = this.state;
 
-    const name = options ? 'codeCompile' : 'code';
+    const name = !handleChange ? 'codeCompile' : 'code';
     // show error inside textarea temp
-    const value = error && options ? error : code;
+    const value = error && !handleChange ? error : code;
 
     return (
       <textarea
@@ -71,9 +78,16 @@ class CodeEditor extends Component {
 
 CodeEditor.propTypes = {
   code: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  handleChange: PropTypes.func,
   options: PropTypes.object
 };
 
-const connectedCodeEditor = connect()(CodeEditor);
+function mapStateToProps(state) {
+  const options = state.options.items ? state.options.items : {};
+  return {
+    options
+  };
+}
+
+const connectedCodeEditor = connect(mapStateToProps)(CodeEditor);
 export { connectedCodeEditor as CodeEditor };

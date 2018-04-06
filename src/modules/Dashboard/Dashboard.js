@@ -22,10 +22,6 @@ class Dashboard extends React.Component {
     super(props);
     this.state = {
       code: '', //javascript
-      options: {
-        presets: ['latest', 'stage-3'],
-        plugins: ['transform-object-assign', 'transform-object-rest-spread']
-      }, //babel options
       el: undefined //iframe dom element reference
     };
   }
@@ -48,14 +44,14 @@ class Dashboard extends React.Component {
 
   render() {
     const { alert } = this.props;
-    const { code, options, el } = this.state;
+    const { code, el } = this.state;
 
     const handleChange = this.handleChange;
 
     return (
       <div className="dashboard">
         <div className="dashboard-container">
-          <Options options={options} handleChange={handleChange}>
+          <Options handleChange={handleChange}>
             {typeof el !== 'undefined' && <Evaluate code={code} el={el} />}
             <Prettier code={code} handleChange={handleChange} />
           </Options>
@@ -63,11 +59,7 @@ class Dashboard extends React.Component {
             <CodeEditor code={code} handleChange={handleChange} />
           </div>
           <div className="code-mirror">
-            <CodeEditor
-              code={code}
-              handleChange={handleChange}
-              options={options}
-            />
+            <CodeEditor code={code} />
             {alert.message && (
               <div className="alert">
                 <Alert alert={alert} />
@@ -95,5 +87,6 @@ function mapStateToProps(state) {
     alert
   };
 }
+
 const connectedDashboard = connect(mapStateToProps)(Dashboard);
 export { connectedDashboard as Dashboard };

@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { transform } from 'babel-standalone';
+
 /* ACTIONS */
-import { alertActions } from '../../_actions';
+import { alertActions, optionsActions } from '../../_actions';
 
 /* CSS */
 import './Evaluate.css';
@@ -12,6 +14,7 @@ class Evaluate extends Component {
   constructor(props) {
     super(props);
     this.state = { isEvaluate: true };
+    props.dispatch(optionsActions.receive());
   }
 
   componentDidMount() {
@@ -55,7 +58,15 @@ class Evaluate extends Component {
       const script = document.createElement('script');
       context.body.appendChild(script);
     }
-    context.querySelector('script').innerHTML = code;
+    try {
+      context.querySelector('script').innerHTML = transform(code, {
+        ast: false,
+        plugins: this.props.options.plugins,
+        presets: this.props.options.presets
+      }).code;
+    } catch (error) {
+      context.querySelector('script').innerHTML = error;
+    }
   };
 
   deleteScript = () => {
@@ -86,8 +97,16 @@ class Evaluate extends Component {
 
 Evaluate.propTypes = {
   code: PropTypes.string.isRequired,
-  el: PropTypes.object.isRequired
+  el: PropTypes.object.isRequired,
+  options: PropTypes.object.isRequired
 };
 
-const connectedEvaluate = connect()(Evaluate);
+function mapStateToProps(state) {
+  const options = state.options.items ? state.options.items : {};
+  return {
+    options
+  };
+}
+
+const connectedEvaluate = connect(mapStateToProps)(Evaluate);
 export { connectedEvaluate as Evaluate };
